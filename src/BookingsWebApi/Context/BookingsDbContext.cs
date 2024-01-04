@@ -33,8 +33,13 @@ public class BookingsDbContext : DbContext, IBookingsDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connectionString = _configuration["ConnectionStrings:SqLite"] ?? string.Empty;
-        optionsBuilder.UseSqlite(connectionString);
+        if (_configuration == null)
+        {
+            return;
+        }
+
+        string connectionString = _configuration["ConnectionStrings:SqlServer"] ?? string.Empty;
+        optionsBuilder.UseSqlServer(connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
